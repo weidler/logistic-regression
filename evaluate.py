@@ -5,7 +5,7 @@ import numpy
 from pandas import DataFrame, read_csv
 from scipy.io import loadmat
 
-from logistic import LogisticRegressor, logistic_loss
+from logistic import LogisticRegressor, logistic_loss, quantize
 from normalize import standardize
 from util import get_iris_sample, get_monk_sample
 from visualize import decision_boundary
@@ -20,15 +20,22 @@ def test(data, model, sample_getter=get_iris_sample):
     """
     correct = 0
     loss = 0
+
     for i in range(len(data)):
         features, target = sample_getter(data, i)
         prediction = model.forward(features)
-        loss += logistic_loss(prediction, target) / len(data)
+        sample_loss = logistic_loss(prediction, target)
+        loss += sample_loss
 
-        if round(prediction) == target:
+        print(target)
+        print(prediction)
+        print(sample_loss)
+        print()
+
+        if quantize(prediction) == target:
             correct += 1
 
-    return correct / len(data), loss
+    return correct / len(data), loss / len(data)
 
 
 def train(data, model, epochs=10, sample_getter=get_iris_sample):
@@ -82,12 +89,12 @@ if __name__ == "__main__":
     # create model
     aggressor = LogisticRegressor(len(kept_features), weight_decay=0.05)
 
-    train(train_set, aggressor, epochs=10, sample_getter=sample_getter)
+    train(train_set, aggressor, epochs=100, sample_getter=sample_getter)
     test_accuracy, test_loss = test(test_set, aggressor, sample_getter=sample_getter)
     train_accuracy, train_loss = test(train_set, aggressor, sample_getter=sample_getter)
     print(f"Accuracy: {test_accuracy} (test); {train_accuracy} (train).\n"
           f"Loss: {round(test_loss, 12)} (test); {round(train_loss, 12)} (train).")
 
     # visualize model
-    if args.dataset == "iris":
+    if len(kept_features) == 2:
         decision_boundary(train_set, aggressor)

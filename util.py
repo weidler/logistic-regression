@@ -2,6 +2,9 @@ from pandas import DataFrame
 
 
 def class_id(classname: str):
+    if isinstance(classname, int):
+        return classname
+
     if classname == "Iris-versicolor":
         return 0
     elif classname == "Iris-setosa":

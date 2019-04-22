@@ -39,9 +39,10 @@ def sigmoid(x):
     try:
         return 1 / (1 + math.exp(-x))
     except OverflowError:
-        return 0.00000000000000001
+        return 1e-15
 
 
 def logistic_loss(prediction, target):
-    prediction = 0.99999 if prediction == 1 else prediction
+    prediction = 1 - 1e-15 if prediction == 1 else prediction
+    prediction = 1e-15 if prediction == 0 else prediction
     return -target * math.log(prediction) - (1 - target) * math.log(1 - prediction)
