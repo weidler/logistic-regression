@@ -89,7 +89,7 @@ if __name__ == "__main__":
     # create model
     aggressor = LogisticRegressor(len(kept_features), weight_decay=0.05)
 
-    train(train_set, aggressor, epochs=100, sample_getter=sample_getter)
+    train(train_set, aggressor, epochs=10, sample_getter=sample_getter)
     test_accuracy, test_loss = test(test_set, aggressor, sample_getter=sample_getter)
     train_accuracy, train_loss = test(train_set, aggressor, sample_getter=sample_getter)
     print(f"Accuracy: {test_accuracy} (test); {train_accuracy} (train).\n"
