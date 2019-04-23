@@ -14,11 +14,11 @@ if __name__ == "__main__":
     numpy.random.seed(100)
     random.seed(100)
 
-    epochs = 30
+    epochs = 100
 
-    lr_scope = (0.05, 0.5)
+    lr_scope = (0.05, 0.2)
     lr_step_size = 0.05
-    lrs = [round(lr_scope[0] + step * lr_step_size, 3) for step in
+    lrs = [0.005] + [round(lr_scope[0] + step * lr_step_size, 3) for step in
            range(int((lr_scope[1] - lr_scope[0] + lr_step_size) // lr_step_size))]
 
     df: DataFrame = read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data", header=None)
@@ -29,11 +29,11 @@ if __name__ == "__main__":
     data = standardize(data)
 
     loss_traces = []
-    X = list(range(5, epochs))
+    X = list(range(epochs))
     for lr in lrs:
         aggressor = LogisticRegressor(len(kept_features), learning_rate=lr, weight_decay=0)
-        loss_traces.append(train(data, aggressor, epochs))
-        plt.plot(X, loss_traces[-1][5:], label=f"{lr}")
+        loss_traces.append(train(data, data[-2:-1], aggressor, epochs)[0])
+        plt.plot(X, loss_traces[-1], label=f"{lr}")
 
     plt.legend()
     plt.show()

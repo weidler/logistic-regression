@@ -7,9 +7,9 @@ from pandas import DataFrame, read_csv
 from scipy.io import loadmat
 
 from logistic import LogisticRegressor, logistic_loss, quantize
-from normalize import standardize, min_max_scale
+from normalize import standardize
 from util import get_iris_sample, get_monk_sample
-from visualize import decision_boundary
+from visualize import decision_boundary, explorative_data_analysis, performance_plot
 
 
 def test(data, model, sample_getter=get_iris_sample):
@@ -34,40 +34,51 @@ def test(data, model, sample_getter=get_iris_sample):
     return correct / len(data), loss / len(data)
 
 
-def train(data, model, epochs=10, sample_getter=get_iris_sample):
+def train(data, validation_data, model, epochs=10, sample_getter=get_iris_sample, involve_reg=False):
     indices = list(range(len(data)))
-    loss_trace = []
-    averaged_trace = []
-    epoch_trace = []
+    train_loss_trace = []
+    train_epoch_trace = []
+    train_acc_trace = []
+    test_epoch_trace = []
+    test_acc_trace = []
     for epoch in range(epochs):
         random.shuffle(indices)
+
+        epoch_correct = 0
 
         for i in indices:
             features, target = sample_getter(data, i)
             prediction = model.forward(features)
             model.backward(features, prediction, target)
-            loss_trace.append(logistic_loss(prediction, target))
+            loss = logistic_loss(prediction, target)
+            train_loss_trace.append(loss)
+            if quantize(prediction) == target:
+                epoch_correct += 1
 
-            if epoch > 0 or i >= 20:
-                averaged_trace.append(statistics.mean(loss_trace[-20:]))
+        validation_acc, validation_loss = test(validation_data, model, sample_getter=sample_getter)
+        test_epoch_trace.append(validation_loss)
+        test_acc_trace.append(validation_acc)
+        train_epoch_trace.append(statistics.mean(train_loss_trace[-len(data):]))
+        train_acc_trace.append(epoch_correct / float(len(data)))
 
-        epoch_trace.append(statistics.mean(loss_trace[-len(data):]))
-
-    return epoch_trace
+    return train_epoch_trace, test_epoch_trace, train_acc_trace, test_acc_trace
 
 
 if __name__ == "__main__":
     # commandline arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", type=str, choices=["iris", "monk"], default="iris")
+    parser.add_argument("--dataset", type=str, choices=["iris", "monk"], default="monk")
     parser.add_argument("--features", nargs="+", type=int, choices=[0, 1, 2, 3], default=[2, 3])
+    parser.add_argument("--exploration", action="store_true", default=False)
+    parser.add_argument("--performance", action="store_true", default=True)
+    parser.add_argument("--decision-boundary", action="store_true", default=False)
+    parser.add_argument("--no-plot", action="store_true", default=False)
+    parser.add_argument("--safe", action="store_true", default=False)
     args = parser.parse_args()
 
-    safe = True
-
     # seeding
-    numpy.random.seed(10)
-    random.seed(10)
+    numpy.random.seed(100)
+    random.seed(100)
 
     # load data
     df = None
@@ -76,8 +87,12 @@ if __name__ == "__main__":
                                  header=None)
         sample_getter = get_iris_sample
     elif args.dataset == "monk":
-        df: DataFrame = DataFrame(loadmat("monk2.mat")["monk2"])
+        df: DataFrame = DataFrame(loadmat("data/monk2.mat")["monk2"])
         sample_getter = get_monk_sample
+
+    # explore data
+    if args.dataset == "iris" and args.exploration:
+        explorative_data_analysis(df)
 
     # features
     kept_features = args.features
@@ -88,20 +103,26 @@ if __name__ == "__main__":
     data = df.drop(columns=[f for f in list(range(df.shape[1] - 1)) if f not in kept_features])
     data = data[:100] if args.dataset == "iris" else data
     data = standardize(data)
-    data = data.sample(frac=1, random_state=10)
+    data = data.sample(frac=1, random_state=11)
 
     train_set = data[:int(.8 * len(data))]
     test_set = data[int(.8 * len(data)):len(data)]
 
     # create model
-    aggressor = LogisticRegressor(len(kept_features), weight_decay=0.05)
+    aggressor = LogisticRegressor(len(kept_features), learning_rate=0.005, weight_decay=0)
 
-    train(train_set, aggressor, epochs=30, sample_getter=sample_getter)
+    train_loss_trace, validation_loss_trace, train_acc_trace, validation_acc_trace = train(train_set, test_set,
+                                                                                           aggressor, epochs=200,
+                                                                                           sample_getter=sample_getter)
     test_accuracy, test_loss = test(test_set, aggressor, sample_getter=sample_getter)
     train_accuracy, train_loss = test(train_set, aggressor, sample_getter=sample_getter)
     print(f"Accuracy: {test_accuracy} (test); {train_accuracy} (train).\n"
           f"Loss: {round(test_loss, 12)} (test); {round(train_loss, 12)} (train).")
 
+    if args.performance:
+        performance_plot(train_loss_trace, validation_loss_trace, train_acc_trace, validation_acc_trace)
+
     # visualize model
-    if len(kept_features) == 2:
-        decision_boundary(train_set, aggressor, (test_accuracy, test_loss, kept_features), safe=safe)
+    if len(kept_features) == 2 and args.decision_boundary:
+        decision_boundary(test_set, aggressor, (train_accuracy, train_loss, kept_features), safe=args.safe,
+                          plot=(not args.no_plot))
