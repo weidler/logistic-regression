@@ -1,12 +1,13 @@
 import argparse
 import random
+import statistics
 
 import numpy
 from pandas import DataFrame, read_csv
 from scipy.io import loadmat
 
 from logistic import LogisticRegressor, logistic_loss, quantize
-from normalize import standardize
+from normalize import standardize, min_max_scale
 from util import get_iris_sample, get_monk_sample
 from visualize import decision_boundary
 
@@ -27,11 +28,6 @@ def test(data, model, sample_getter=get_iris_sample):
         sample_loss = logistic_loss(prediction, target)
         loss += sample_loss
 
-        print(target)
-        print(prediction)
-        print(sample_loss)
-        print()
-
         if quantize(prediction) == target:
             correct += 1
 
@@ -41,6 +37,8 @@ def test(data, model, sample_getter=get_iris_sample):
 def train(data, model, epochs=10, sample_getter=get_iris_sample):
     indices = list(range(len(data)))
     loss_trace = []
+    averaged_trace = []
+    epoch_trace = []
     for epoch in range(epochs):
         random.shuffle(indices)
 
@@ -50,21 +48,29 @@ def train(data, model, epochs=10, sample_getter=get_iris_sample):
             model.backward(features, prediction, target)
             loss_trace.append(logistic_loss(prediction, target))
 
-    return loss_trace
+            if epoch > 0 or i >= 20:
+                averaged_trace.append(statistics.mean(loss_trace[-20:]))
+
+        epoch_trace.append(statistics.mean(loss_trace[-len(data):]))
+
+    return epoch_trace
 
 
 if __name__ == "__main__":
     # commandline arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", type=str, choices=["iris", "monk"], default="monk")
-    parser.add_argument("--features", nargs="+", type=int, choices=[0, 1, 2, 3], default=[1, 2])
+    parser.add_argument("--dataset", type=str, choices=["iris", "monk"], default="iris")
+    parser.add_argument("--features", nargs="+", type=int, choices=[0, 1, 2, 3], default=[2, 3])
     args = parser.parse_args()
+
+    safe = True
 
     # seeding
     numpy.random.seed(10)
     random.seed(10)
 
     # load data
+    df = None
     if args.dataset == "iris":
         df: DataFrame = read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data",
                                  header=None)
@@ -82,6 +88,7 @@ if __name__ == "__main__":
     data = df.drop(columns=[f for f in list(range(df.shape[1] - 1)) if f not in kept_features])
     data = data[:100] if args.dataset == "iris" else data
     data = standardize(data)
+    data = data.sample(frac=1, random_state=10)
 
     train_set = data[:int(.8 * len(data))]
     test_set = data[int(.8 * len(data)):len(data)]
@@ -89,7 +96,7 @@ if __name__ == "__main__":
     # create model
     aggressor = LogisticRegressor(len(kept_features), weight_decay=0.05)
 
-    train(train_set, aggressor, epochs=100, sample_getter=sample_getter)
+    train(train_set, aggressor, epochs=30, sample_getter=sample_getter)
     test_accuracy, test_loss = test(test_set, aggressor, sample_getter=sample_getter)
     train_accuracy, train_loss = test(train_set, aggressor, sample_getter=sample_getter)
     print(f"Accuracy: {test_accuracy} (test); {train_accuracy} (train).\n"
@@ -97,4 +104,4 @@ if __name__ == "__main__":
 
     # visualize model
     if len(kept_features) == 2:
-        decision_boundary(train_set, aggressor)
+        decision_boundary(train_set, aggressor, (test_accuracy, test_loss, kept_features), safe=safe)
