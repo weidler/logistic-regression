@@ -1,16 +1,23 @@
+import random
+
+import matplotlib.pyplot as plt
+import numpy
 from pandas import DataFrame, read_csv
+from scipy.signal import savgol_filter
 
 from evaluate import train
 from logistic import LogisticRegressor
 from normalize import standardize
 
-from scipy.signal import savgol_filter
-
-import matplotlib.pyplot as plt
-
 if __name__ == "__main__":
-    lr_scope = (0.01, 0.1)
-    lr_step_size = 0.01
+    # seeding
+    numpy.random.seed(100)
+    random.seed(100)
+
+    epochs = 30
+
+    lr_scope = (0.05, 0.5)
+    lr_step_size = 0.05
     lrs = [round(lr_scope[0] + step * lr_step_size, 3) for step in
            range(int((lr_scope[1] - lr_scope[0] + lr_step_size) // lr_step_size))]
 
@@ -18,18 +25,15 @@ if __name__ == "__main__":
     kept_features = [0, 2]
     data = df.drop(columns=[f for f in list(range(4)) if f not in kept_features])
     data = data[:100]
+    data = data.sample(frac=1)
     data = standardize(data)
 
     loss_traces = []
-    X = list(range(1, 100 * 5 + 1))
+    X = list(range(5, epochs))
     for lr in lrs:
-        print(lr)
-        try:
-            aggressor = LogisticRegressor(len(kept_features), learning_rate=lr, weight_decay=0.05)
-            loss_traces.append(train(data, aggressor, 5))
-            plt.plot(X, savgol_filter(loss_traces[-1], 101, 2), label=f"{lr}")
-        except:
-            pass
+        aggressor = LogisticRegressor(len(kept_features), learning_rate=lr, weight_decay=0)
+        loss_traces.append(train(data, aggressor, epochs))
+        plt.plot(X, loss_traces[-1][5:], label=f"{lr}")
 
     plt.legend()
     plt.show()
