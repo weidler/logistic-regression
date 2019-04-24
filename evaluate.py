@@ -67,13 +67,13 @@ def train(data, validation_data, model, epochs=10, sample_getter=get_iris_sample
 if __name__ == "__main__":
     # commandline arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", type=str, choices=["iris", "monk"], default="monk")
-    parser.add_argument("--features", nargs="+", type=int, choices=[0, 1, 2, 3], default=[2, 3])
-    parser.add_argument("--exploration", action="store_true", default=False)
-    parser.add_argument("--performance", action="store_true", default=True)
-    parser.add_argument("--decision-boundary", action="store_true", default=False)
-    parser.add_argument("--no-plot", action="store_true", default=False)
-    parser.add_argument("--safe", action="store_true", default=False)
+    parser.add_argument("--dataset", help="the dataset to be used, either iris or monk", type=str, choices=["iris", "monk"], default="iris")
+    parser.add_argument("--features", help="features used when dataset is iris", nargs="+", type=int, choices=[0, 1, 2, 3], default=[0, 2])
+    parser.add_argument("--exploration", help="whether to plot the pairplot", action="store_true", default=False)
+    parser.add_argument("--performance", help="whether to plot performance measures", action="store_true", default=False)
+    parser.add_argument("--decision-boundary", help="whether to plot/save the decision boundary", action="store_true", default=False)
+    parser.add_argument("--no-plot", help="deactivate plotting for the decision boundary", action="store_true", default=False)
+    parser.add_argument("--safe", help="activate saving of decision boundary plot", action="store_true", default=False)
     args = parser.parse_args()
 
     # seeding
@@ -109,7 +109,7 @@ if __name__ == "__main__":
     test_set = data[int(.8 * len(data)):len(data)]
 
     # create model
-    aggressor = LogisticRegressor(len(kept_features), learning_rate=0.005, weight_decay=0)
+    aggressor = LogisticRegressor(len(kept_features), learning_rate=0.005, weight_decay=0.005)
 
     train_loss_trace, validation_loss_trace, train_acc_trace, validation_acc_trace = train(train_set, test_set,
                                                                                            aggressor, epochs=200,
@@ -117,7 +117,7 @@ if __name__ == "__main__":
     test_accuracy, test_loss = test(test_set, aggressor, sample_getter=sample_getter)
     train_accuracy, train_loss = test(train_set, aggressor, sample_getter=sample_getter)
     print(f"Accuracy: {test_accuracy} (test); {train_accuracy} (train).\n"
-          f"Loss: {round(test_loss, 12)} (test); {round(train_loss, 12)} (train).")
+          f"Loss: {round(test_loss)} (test); {round(train_loss, 12)} (train).")
 
     if args.performance:
         performance_plot(train_loss_trace, validation_loss_trace, train_acc_trace, validation_acc_trace)
