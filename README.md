@@ -35,12 +35,7 @@ equation:
 
 <p align="center"><img src="./svgs/964a91ad2917985fb48db1d14f66e11b.svg" width=85.423965pt height=16.438356pt/></p>
 
-That is, we take the dot product (sum of element-wise products) of weights (plus bias) <img src="./svgs/c6f31675281baa2569d8961577ecbf6b.svg" width=10.821921pt height=7.0776255pt/> and the augmented input <img src="./svgs/7073627e9999e583f5539cb4560a14d7.svg" width=9.3949845pt height=7.0776255pt/> and squeeze it into the range <img src="./svgs/d168c92829058f6af31167b13cce26f0.svg" width=36.529845pt height=24.6576pt/> using the sigmoid function <img src="./svgs/06bada42a49fa544331f5feb92c670dd.svg" width=9.982896pt height=7.0776255pt/>. For instance, given two features, we get the following equation:
-
-<p align="center"><img src="./svgs/9cbaed8c288e5333c482bdb330e12794.svg" width=372.1377pt height=110.137995pt/></p>
-
-Note the augmented <img src="./svgs/1e978d916098a6ba702f227a3c264262.svg" width=8.219211pt height=10.5936105pt/> in the input vector as well as <img src="./svgs/d1a2f6d69afe0ced3bc7d32fef39f3ab.svg" width=16.784625pt height=9.5433525pt/>
-representing the bias.
+That is, we take the dot product (sum of element-wise products) of weights (plus bias) <img src="./svgs/c6f31675281baa2569d8961577ecbf6b.svg" width=10.821921pt height=7.0776255pt/> and the augmented input <img src="./svgs/7073627e9999e583f5539cb4560a14d7.svg" width=9.3949845pt height=7.0776255pt/> and squeeze it into the range <img src="./svgs/d168c92829058f6af31167b13cce26f0.svg" width=36.529845pt height=24.6576pt/> using the sigmoid function <img src="./svgs/06bada42a49fa544331f5feb92c670dd.svg" width=9.982896pt height=7.0776255pt/>.
 
 To update <img src="./svgs/c6f31675281baa2569d8961577ecbf6b.svg" width=10.821921pt height=7.0776255pt/>, we employ the Gradient Descent algorithm with batch size 1, i.e., Stochastic Gradient Descent (SGD). Thus, during training, at each step the model samples one instance from the dataset without replacement. It then performs the forward pass to make a prediction <img src="./svgs/d62f9c2bf8726d76e17edfaec186f464.svg" width=9.3474975pt height=14.611872pt/>. The objective of logistic regression is the maximization of the log likelihood of true labels <img src="./svgs/8dfa08d909b122145492276ec756f3fa.svg" width=8.6492175pt height=10.2739725pt/> given data <img src="./svgs/7073627e9999e583f5539cb4560a14d7.svg" width=9.3949845pt height=7.0776255pt/>
 and parameters <img src="./svgs/c6f31675281baa2569d8961577ecbf6b.svg" width=10.821921pt height=7.0776255pt/>. We can maximize by minimizing its negation using Gradient Descent. The gradient of the logistic loss for weight <img src="./svgs/6ac91b4e7dd35551c6ea477deba5f82d.svg" width=5.663229pt height=10.8415065pt/> is given by
