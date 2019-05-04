@@ -35,54 +35,33 @@ equation:
 
 <p align="center"><img src="./svgs/964a91ad2917985fb48db1d14f66e11b.svg" width=85.423965pt height=16.438356pt/></p>
 
-That is, we take the dot product (sum of element-wise products) of
-weights (plus bias) <img src="./svgs/c6f31675281baa2569d8961577ecbf6b.svg" width=10.821921pt height=7.0776255pt/> and the augmented input <img src="./svgs/7073627e9999e583f5539cb4560a14d7.svg" width=9.3949845pt height=7.0776255pt/> and squeeze
-it into the range <img src="./svgs/d168c92829058f6af31167b13cce26f0.svg" width=36.529845pt height=24.6576pt/> using the sigmoid function <img src="./svgs/06bada42a49fa544331f5feb92c670dd.svg" width=9.982896pt height=7.0776255pt/>. For
-instance, given two features, we get the following equation:
+That is, we take the dot product (sum of element-wise products) of weights (plus bias) <img src="./svgs/c6f31675281baa2569d8961577ecbf6b.svg" width=10.821921pt height=7.0776255pt/> and the augmented input <img src="./svgs/7073627e9999e583f5539cb4560a14d7.svg" width=9.3949845pt height=7.0776255pt/> and squeeze it into the range <img src="./svgs/d168c92829058f6af31167b13cce26f0.svg" width=36.529845pt height=24.6576pt/> using the sigmoid function <img src="./svgs/06bada42a49fa544331f5feb92c670dd.svg" width=9.982896pt height=7.0776255pt/>. For instance, given two features, we get the following equation:
 
 <p align="center"><img src="./svgs/9cbaed8c288e5333c482bdb330e12794.svg" width=372.1377pt height=110.137995pt/></p>
 
 Note the augmented <img src="./svgs/1e978d916098a6ba702f227a3c264262.svg" width=8.219211pt height=10.5936105pt/> in the input vector as well as <img src="./svgs/d1a2f6d69afe0ced3bc7d32fef39f3ab.svg" width=16.784625pt height=9.5433525pt/>
 representing the bias.
 
-To update <img src="./svgs/c6f31675281baa2569d8961577ecbf6b.svg" width=10.821921pt height=7.0776255pt/>, we employ the Gradient Descent algorithm with
-batch size 1, i.e., Stochastic Gradient Descent (SGD). Thus, during
-training, at each step the model samples one instance from the dataset
-without replacement. It then performs the forward pass to make a
-prediction <img src="./svgs/d62f9c2bf8726d76e17edfaec186f464.svg" width=9.3474975pt height=14.611872pt/>. The objective of logistic regression is the
-maximization of the log likelihood of true labels <img src="./svgs/8dfa08d909b122145492276ec756f3fa.svg" width=8.6492175pt height=10.2739725pt/> given data <img src="./svgs/7073627e9999e583f5539cb4560a14d7.svg" width=9.3949845pt height=7.0776255pt/>
-and parameters <img src="./svgs/c6f31675281baa2569d8961577ecbf6b.svg" width=10.821921pt height=7.0776255pt/>. We can maximize by minimizing its negation
-using Gradient Descent. The gradient of the logistic loss for weight
-<p align="center"><img src="./svgs/6ac91b4e7dd35551c6ea477deba5f82d.svg" width=5.663229pt height=10.8415065pt/> is given by
+To update <img src="./svgs/c6f31675281baa2569d8961577ecbf6b.svg" width=10.821921pt height=7.0776255pt/>, we employ the Gradient Descent algorithm with batch size 1, i.e., Stochastic Gradient Descent (SGD). Thus, during training, at each step the model samples one instance from the dataset without replacement. It then performs the forward pass to make a prediction <img src="./svgs/d62f9c2bf8726d76e17edfaec186f464.svg" width=9.3474975pt height=14.611872pt/>. The objective of logistic regression is the maximization of the log likelihood of true labels <img src="./svgs/8dfa08d909b122145492276ec756f3fa.svg" width=8.6492175pt height=10.2739725pt/> given data <img src="./svgs/7073627e9999e583f5539cb4560a14d7.svg" width=9.3949845pt height=7.0776255pt/>
+and parameters <img src="./svgs/c6f31675281baa2569d8961577ecbf6b.svg" width=10.821921pt height=7.0776255pt/>. We can maximize by minimizing its negation using Gradient Descent. The gradient of the logistic loss for weight <img src="./svgs/6ac91b4e7dd35551c6ea477deba5f82d.svg" width=5.663229pt height=10.8415065pt/> is given by
 
 <p align="center"><img src="./svgs/4e687ade87553e995ccb1b5b1fdb6823.svg" width=140.91792pt height=16.438356pt/></p>
 
-Based on the prediction <img src="./svgs/d62f9c2bf8726d76e17edfaec186f464.svg" width=9.3474975pt height=14.611872pt/> from the forward pass, the true
-label <img src="./svgs/8dfa08d909b122145492276ec756f3fa.svg" width=8.6492175pt height=10.2739725pt/> and the input feature <img src="./svgs/96de47a534893e2f93c9edceffaef3d1.svg" width=14.045889pt height=9.5433525pt/>, SGD then updates the weights
-using the delta rule
+Based on the prediction <img src="./svgs/d62f9c2bf8726d76e17edfaec186f464.svg" width=9.3474975pt height=14.611872pt/> from the forward pass, the true label <img src="./svgs/8dfa08d909b122145492276ec756f3fa.svg" width=8.6492175pt height=10.2739725pt/> and the input feature <img src="./svgs/96de47a534893e2f93c9edceffaef3d1.svg" width=14.045889pt height=9.5433525pt/>, SGD then updates the weights using the delta rule
 
 <p align="center"><img src="./svgs/159164f7edf5fbc96db92332a20278e1.svg" width=177.47895pt height=16.438356pt/></p>
 
-The negation of <img src="./svgs/01115551f5e60fd9bf679e6d9def7437.svg" width=49.391265pt height=16.438356pt/> is necessary since we minimize in
-gradient descent, but want to maximize the log likelihood (and therefore
-minimize its negation). <img src="./svgs/6f532d874cff327b5508121b0a26c178.svg" width=8.751963pt height=10.2739725pt/> is the learning rate that controls the
-step size of the Gradient Descent. If steps are too small, learning will
-take too long. If the steps are too large, it can happen that the
-optimization does not converge to the minimum but oscillates around it.
+The negation of <img src="./svgs/01115551f5e60fd9bf679e6d9def7437.svg" width=49.391265pt height=16.438356pt/> is necessary since we minimize in gradient descent, but want to maximize the log likelihood (and therefore minimize its negation). <img src="./svgs/6f532d874cff327b5508121b0a26c178.svg" width=8.751963pt height=10.2739725pt/> is the learning rate that controls the step size of the Gradient Descent. If steps are too small, learning will take too long. If the steps are too large, it can happen that the optimization does not converge to the minimum but oscillates around it.
 
-Furthermore, a regularization term is added to the loss <img src="./svgs/4e23420b520032a25ea27771a93d6533.svg" width=34.303665pt height=16.438356pt/>,
-controlled by the weight decay rate <img src="./svgs/18f8eacfb4280d2c13c04e23edc6650d.svg" width=9.5890905pt height=11.415525pt/>:
+Furthermore, a regularization term is added to the loss <img src="./svgs/4e23420b520032a25ea27771a93d6533.svg" width=34.303665pt height=16.438356pt/>, controlled by the weight decay rate <img src="./svgs/18f8eacfb4280d2c13c04e23edc6650d.svg" width=9.5890905pt height=11.415525pt/>:
 
 <p align="center"><img src="./svgs/077404b64d095d2445485edda8a31db4.svg" width=47.201055pt height=33.81213pt/></p>
 
-The partial derivative that needs to be added to the gradient of
-equation [\[eq:gradient\]](#eq:gradient) is
+The partial derivative that needs to be added to the gradient of equation [\[eq:gradient\]](#eq:gradient) is
 
 <p align="center"><img src="./svgs/497756bc01cc515dbe0fd399681b10f3.svg" width=29.860215pt height=13.881252pt/></p>
 
-Since we do not want to prevent the bias from taking any necessary
-value, we only apply weight decay to all <img src="./svgs/7f7a18140b9af76bca6df8935c37b126.svg" width=14.883033pt height=9.5433525pt/> except for
-<p align="center"><img src="./svgs/d1a2f6d69afe0ced3bc7d32fef39f3ab.svg" width=16.784625pt height=9.5433525pt/>.
+Since we do not want to prevent the bias from taking any necessary value, we only apply weight decay to all <img src="./svgs/7f7a18140b9af76bca6df8935c37b126.svg" width=14.883033pt height=9.5433525pt/> except for <img src="./svgs/d1a2f6d69afe0ced3bc7d32fef39f3ab.svg" width=16.784625pt height=9.5433525pt/>.
 
 ![Pairplot of the iris
 dataset<span label="fig:explo"></span>](figures/explodata.png)
