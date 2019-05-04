@@ -33,7 +33,7 @@ augmented by one neuron of constant value 1 to represent the bias. A
 *forward* pass through this model is hence performed by the following
 equation:
 
-<p align="center"><img src="https://raw.githubusercontent.com/weidler/logistic-regression/master/svgs/964a91ad2917985fb48db1d14f66e11b.svg?invert_in_darkmode" align=middle width=85.423965pt height=16.438356pt/></p>
+<p align="center"><img src="./svgs/964a91ad2917985fb48db1d14f66e11b.svgs" align=middle width=85.423965pt height=16.438356pt/></p>
 
 That is, we take the dot product (sum of element-wise products) of
 weights (plus bias) <p align="center"><img src="https://raw.githubusercontent.com/weidler/logistic-regression/master/svgs/c6f31675281baa2569d8961577ecbf6b.svg?invert_in_darkmode" align=middle width=10.821921pt height=7.0776255pt/></p> and the augmented input <p align="center"><img src="https://raw.githubusercontent.com/weidler/logistic-regression/master/svgs/7073627e9999e583f5539cb4560a14d7.svg?invert_in_darkmode" align=middle width=9.3949845pt height=7.0776255pt/></p> and squeeze
