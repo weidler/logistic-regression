@@ -3,11 +3,10 @@ import random
 import matplotlib.pyplot as plt
 import numpy
 from pandas import DataFrame, read_csv
-from scipy.signal import savgol_filter
 
-from evaluate import train
-from logistic import LogisticRegressor
-from normalize import standardize
+from src.evaluate import train
+from src.logistic import LogisticRegressor
+from src.normalize import standardize
 
 if __name__ == "__main__":
     # seeding

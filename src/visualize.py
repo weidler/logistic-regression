@@ -3,7 +3,7 @@ import numpy
 from pandas import DataFrame
 import seaborn
 
-from util import class_id
+from src.util import class_id
 
 
 def decision_boundary(data: DataFrame, model, stats, safe=False, plot=True):

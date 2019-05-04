@@ -6,10 +6,10 @@ import numpy
 from pandas import DataFrame, read_csv
 from scipy.io import loadmat
 
-from logistic import LogisticRegressor, logistic_loss, quantize
-from normalize import standardize
-from util import get_iris_sample, get_monk_sample
-from visualize import decision_boundary, explorative_data_analysis, performance_plot
+from src.logistic import LogisticRegressor, logistic_loss, quantize
+from src.normalize import standardize
+from src.util import get_iris_sample, get_monk_sample
+from src.visualize import decision_boundary, explorative_data_analysis, performance_plot
 
 
 def test(data, model, sample_getter=get_iris_sample):
