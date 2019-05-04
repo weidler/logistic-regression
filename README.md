@@ -36,42 +36,42 @@ equation:
 <p align="center"><img src="./svgs/964a91ad2917985fb48db1d14f66e11b.svg" align=middle width=85.423965pt height=16.438356pt/></p>
 
 That is, we take the dot product (sum of element-wise products) of
-weights (plus bias) <p align="center"><img src="./svgs/c6f31675281baa2569d8961577ecbf6b.svg" align=middle width=10.821921pt height=7.0776255pt/></p> and the augmented input <p align="center"><img src="./svgs/7073627e9999e583f5539cb4560a14d7.svg" align=middle width=9.3949845pt height=7.0776255pt/></p> and squeeze
-it into the range <img src="./svgs/d168c92829058f6af31167b13cce26f0.svg" align=middle width=36.529845pt height=24.6576pt/> using the sigmoid function <p align="center"><img src="./svgs/06bada42a49fa544331f5feb92c670dd.svg" align=middle width=9.982896pt height=7.0776255pt/></p>. For
+weights (plus bias) <img src="./svgs/c6f31675281baa2569d8961577ecbf6b.svg" align=middle width=10.821921pt height=7.0776255pt/> and the augmented input <img src="./svgs/7073627e9999e583f5539cb4560a14d7.svg" align=middle width=9.3949845pt height=7.0776255pt/> and squeeze
+it into the range <img src="./svgs/d168c92829058f6af31167b13cce26f0.svg" align=middle width=36.529845pt height=24.6576pt/> using the sigmoid function <img src="./svgs/06bada42a49fa544331f5feb92c670dd.svg" align=middle width=9.982896pt height=7.0776255pt/></p>. For
 instance, given two features, we get the following equation:
 
 <p align="center"><img src="./svgs/9cbaed8c288e5333c482bdb330e12794.svg" align=middle width=372.1377pt height=110.137995pt/></p>
 
-Note the augmented <p align="center"><img src="./svgs/1e978d916098a6ba702f227a3c264262.svg" align=middle width=8.219211pt height=10.5936105pt/></p> in the input vector as well as <p align="center"><img src="./svgs/d1a2f6d69afe0ced3bc7d32fef39f3ab.svg" align=middle width=16.784625pt height=9.5433525pt/></p>
+Note the augmented <img src="./svgs/1e978d916098a6ba702f227a3c264262.svg" align=middle width=8.219211pt height=10.5936105pt/> in the input vector as well as <img src="./svgs/d1a2f6d69afe0ced3bc7d32fef39f3ab.svg" align=middle width=16.784625pt height=9.5433525pt/></p>
 representing the bias.
 
-To update <p align="center"><img src="./svgs/c6f31675281baa2569d8961577ecbf6b.svg" align=middle width=10.821921pt height=7.0776255pt/></p>, we employ the Gradient Descent algorithm with
+To update <img src="./svgs/c6f31675281baa2569d8961577ecbf6b.svg" align=middle width=10.821921pt height=7.0776255pt/></p>, we employ the Gradient Descent algorithm with
 batch size 1, i.e., Stochastic Gradient Descent (SGD). Thus, during
 training, at each step the model samples one instance from the dataset
 without replacement. It then performs the forward pass to make a
-prediction <p align="center"><img src="./svgs/d62f9c2bf8726d76e17edfaec186f464.svg" align=middle width=9.3474975pt height=14.611872pt/></p>. The objective of logistic regression is the
-maximization of the log likelihood of true labels <p align="center"><img src="./svgs/8dfa08d909b122145492276ec756f3fa.svg" align=middle width=8.6492175pt height=10.2739725pt/></p> given data <p align="center"><img src="./svgs/7073627e9999e583f5539cb4560a14d7.svg" align=middle width=9.3949845pt height=7.0776255pt/></p>
-and parameters <p align="center"><img src="./svgs/c6f31675281baa2569d8961577ecbf6b.svg" align=middle width=10.821921pt height=7.0776255pt/></p>. We can maximize by minimizing its negation
+prediction <img src="./svgs/d62f9c2bf8726d76e17edfaec186f464.svg" align=middle width=9.3474975pt height=14.611872pt/></p>. The objective of logistic regression is the
+maximization of the log likelihood of true labels <img src="./svgs/8dfa08d909b122145492276ec756f3fa.svg" align=middle width=8.6492175pt height=10.2739725pt/> given data <img src="./svgs/7073627e9999e583f5539cb4560a14d7.svg" align=middle width=9.3949845pt height=7.0776255pt/></p>
+and parameters <img src="./svgs/c6f31675281baa2569d8961577ecbf6b.svg" align=middle width=10.821921pt height=7.0776255pt/></p>. We can maximize by minimizing its negation
 using Gradient Descent. The gradient of the logistic loss for weight
-<p align="center"><img src="./svgs/6ac91b4e7dd35551c6ea477deba5f82d.svg" align=middle width=5.663229pt height=10.8415065pt/></p> is given by
+<p align="center"><img src="./svgs/6ac91b4e7dd35551c6ea477deba5f82d.svg" align=middle width=5.663229pt height=10.8415065pt/> is given by
 
 <p align="center"><img src="./svgs/4e687ade87553e995ccb1b5b1fdb6823.svg" align=middle width=140.91792pt height=16.438356pt/></p>
 
-Based on the prediction <p align="center"><img src="./svgs/d62f9c2bf8726d76e17edfaec186f464.svg" align=middle width=9.3474975pt height=14.611872pt/></p> from the forward pass, the true
-label <p align="center"><img src="./svgs/8dfa08d909b122145492276ec756f3fa.svg" align=middle width=8.6492175pt height=10.2739725pt/></p> and the input feature <p align="center"><img src="./svgs/96de47a534893e2f93c9edceffaef3d1.svg" align=middle width=14.045889pt height=9.5433525pt/></p>, SGD then updates the weights
+Based on the prediction <img src="./svgs/d62f9c2bf8726d76e17edfaec186f464.svg" align=middle width=9.3474975pt height=14.611872pt/> from the forward pass, the true
+label <img src="./svgs/8dfa08d909b122145492276ec756f3fa.svg" align=middle width=8.6492175pt height=10.2739725pt/> and the input feature <img src="./svgs/96de47a534893e2f93c9edceffaef3d1.svg" align=middle width=14.045889pt height=9.5433525pt/></p>, SGD then updates the weights
 using the delta rule
 
 <p align="center"><img src="./svgs/159164f7edf5fbc96db92332a20278e1.svg" align=middle width=177.47895pt height=16.438356pt/></p>
 
-The negation of <p align="center"><img src="./svgs/01115551f5e60fd9bf679e6d9def7437.svg" align=middle width=49.391265pt height=16.438356pt/></p> is necessary since we minimize in
+The negation of <img src="./svgs/01115551f5e60fd9bf679e6d9def7437.svg" align=middle width=49.391265pt height=16.438356pt/> is necessary since we minimize in
 gradient descent, but want to maximize the log likelihood (and therefore
-minimize its negation). <p align="center"><img src="./svgs/6f532d874cff327b5508121b0a26c178.svg" align=middle width=8.751963pt height=10.2739725pt/></p> is the learning rate that controls the
+minimize its negation). <img src="./svgs/6f532d874cff327b5508121b0a26c178.svg" align=middle width=8.751963pt height=10.2739725pt/> is the learning rate that controls the
 step size of the Gradient Descent. If steps are too small, learning will
 take too long. If the steps are too large, it can happen that the
 optimization does not converge to the minimum but oscillates around it.
 
-Furthermore, a regularization term is added to the loss <p align="center"><img src="./svgs/4e23420b520032a25ea27771a93d6533.svg" align=middle width=34.303665pt height=16.438356pt/></p>,
-controlled by the weight decay rate <p align="center"><img src="./svgs/18f8eacfb4280d2c13c04e23edc6650d.svg" align=middle width=9.5890905pt height=11.415525pt/></p>:
+Furthermore, a regularization term is added to the loss <img src="./svgs/4e23420b520032a25ea27771a93d6533.svg" align=middle width=34.303665pt height=16.438356pt/></p>,
+controlled by the weight decay rate <img src="./svgs/18f8eacfb4280d2c13c04e23edc6650d.svg" align=middle width=9.5890905pt height=11.415525pt/></p>:
 
 <p align="center"><img src="./svgs/077404b64d095d2445485edda8a31db4.svg" align=middle width=47.201055pt height=33.81213pt/></p>
 
@@ -81,11 +81,11 @@ equation [\[eq:gradient\]](#eq:gradient) is
 <p align="center"><img src="./svgs/497756bc01cc515dbe0fd399681b10f3.svg" align=middle width=29.860215pt height=13.881252pt/></p>
 
 Since we do not want to prevent the bias from taking any necessary
-value, we only apply weight decay to all <p align="center"><img src="./svgs/7f7a18140b9af76bca6df8935c37b126.svg" align=middle width=14.883033pt height=9.5433525pt/></p> except for
+value, we only apply weight decay to all <img src="./svgs/7f7a18140b9af76bca6df8935c37b126.svg" align=middle width=14.883033pt height=9.5433525pt/> except for
 <p align="center"><img src="./svgs/d1a2f6d69afe0ced3bc7d32fef39f3ab.svg" align=middle width=16.784625pt height=9.5433525pt/></p>.
 
 ![Pairplot of the iris
-dataset<span label="fig:explo"></span>](figures/explodata.pdf)
+dataset<span label="fig:explo"></span>](figures/explodata.png)
 
 # Data
 
@@ -122,59 +122,59 @@ train and test set in a 80/20 split.
 
 ![Development of train set and test set loss and accuracy over 30 epochs
 on the iris
-dataset.<span label="fig:perfiris"></span>](figures/performance.pdf)
+dataset.<span label="fig:perfiris"></span>](figures/performance.png)
 
 ## Iris Dataset
 
 ![Decision boundaries from Figure
 [\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
 test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_0_1.pdf)
+points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_0_1.png)
 ![Decision boundaries from Figure
 [\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
 test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_0_2.pdf)
+points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_0_2.png)
 ![Decision boundaries from Figure
 [\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
 test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_0_3.pdf)
+points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_0_3.png)
 ![Decision boundaries from Figure
 [\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
 test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_1_2.pdf)
+points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_1_2.png)
 ![Decision boundaries from Figure
 [\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
 test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_1_3.pdf)
+points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_1_3.png)
 ![Decision boundaries from Figure
 [\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
 test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_2_3.pdf)
+points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_2_3.png)
 
 ![Decision boundaries from Figure
 [\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
 test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_0_1_test.pdf)
+points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_0_1_test.png)
 ![Decision boundaries from Figure
 [\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
 test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_0_2_test.pdf)
+points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_0_2_test.png)
 ![Decision boundaries from Figure
 [\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
 test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_0_3_test.pdf)
+points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_0_3_test.png)
 ![Decision boundaries from Figure
 [\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
 test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_1_2_test.pdf)
+points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_1_2_test.png)
 ![Decision boundaries from Figure
 [\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
 test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_1_3_test.pdf)
+points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_1_3_test.png)
 ![Decision boundaries from Figure
 [\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
 test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_2_3_test.pdf)
+points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_2_3_test.png)
 
 For experiments on the Iris dataset, the learning rate is set to
 0.05 and the weight decay to 0.005. Figure [2](#fig:perfiris)
@@ -222,7 +222,7 @@ weight decay with rate <img src="./svgs/1f3e30a75633bef3b9280e9be2e1ce1d.svg" al
 ### Learning Rate Tuning
 
 ![Convergence (loss) over 100 epochs on the iris dataset for different
-learning rates.<span label="fig:lr"></span>](figures/lr.pdf)
+learning rates.<span label="fig:lr"></span>](figures/lr.png)
 
 We can explore the effects of different learning rates <img src="./svgs/1d0496971a2775f4887d1df25cea4f7e.svg" align=middle width=8.752095pt height=14.15535pt/> by
 plotting the convergence of the model when using them. Such a plot is
@@ -246,7 +246,7 @@ after <img src="./svgs/88db9c6bd8c9a0b1527a1cedb8501c55.svg" align=middle width=
 
 ![Development of train set and test set loss and accuracy over 30 epochs
 on the monk
-dataset.<span label="fig:perfmonk"></span>](figures/performance_monk.pdf)
+dataset.<span label="fig:perfmonk"></span>](figures/performance_monk.png)
 
 |              | **Train** | **Test** |
 | :----------- | :-------- | :------- |
