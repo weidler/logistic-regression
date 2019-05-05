@@ -60,16 +60,14 @@ The partial derivative that needs to be added to the gradient of equation [\[eq:
 
 Since we do not want to prevent the bias from taking any necessary value, we only apply weight decay to all <img src="./svgs/7f7a18140b9af76bca6df8935c37b126.svg" width=14.883033pt height=9.5433525pt/> except for <img src="./svgs/d1a2f6d69afe0ced3bc7d32fef39f3ab.svg" width=16.784625pt height=9.5433525pt/>.
 
+# Data
+
 ![Pairplot of the iris
 dataset<span label="fig:explo"></span>](figures/explodata.png)
 
-# Data
-
 The logistic regression model described above is tested on two datasets:
 the *iris* dataset and the *monk* dataset. The **iris dataset** consists
-of three classes, with 50 data points each. Figure [1](#fig:explo)
-visualizes the dataset in a pairplot. It becomes apparent from this plot
-that the classes *setosa* and *versicolor* can be unambigously
+of three classes, with 50 data points each. The figure above visualizes the dataset in a pairplot. It becomes apparent from this plot that the classes *setosa* and *versicolor* can be unambigously
 distinguished by the use of any two features. We will leverage this fact
 in order to make the above described model applicable to the iris
 dataset by only taking the first 100 samples into account and hence
@@ -96,11 +94,17 @@ train and test set in a 80/20 split.
 
 # Results
 
+## Iris Dataset
+
 ![Development of train set and test set loss and accuracy over 30 epochs
 on the iris
 dataset.<span label="fig:perfiris"></span>](figures/performance.png)
 
-## Iris Dataset
+For experiments on the Iris dataset, the learning rate is set to
+0.05 and the weight decay to 0.005. The figure above shows the development of loss and accuracy over <img src="./svgs/08f4ed92f27cec32cdd7a6ecd580f9e7.svg" width=16.438455pt height=21.18732pt/> epochs of
+training. The figures below show
+the decision boundaries trained with different feature pairs along the
+training and testing data points respectively.
 
 | Train Data | Test Data |
 | --- | --- |
@@ -111,16 +115,7 @@ dataset.<span label="fig:perfiris"></span>](figures/performance.png)
 | ![](figures/db_1_3.png) | ![](figures/db_1_3_test.png) |
 | ![](figures/db_2_3.png) | ![](figures/db_2_3_test.png) |
 
-For experiments on the Iris dataset, the learning rate is set to
-0.05 and the weight decay to 0.005. Figure [2](#fig:perfiris)
-shows the development of loss and accuracy over <img src="./svgs/08f4ed92f27cec32cdd7a6ecd580f9e7.svg" width=16.438455pt height=21.18732pt/> epochs of
-training. Figure [\[fig:decision-boundaries\]](#fig:decision-boundaries)
-and Figure
-[\[fig:decision-boundaries-test\]](#fig:decision-boundaries-test) show
-the decision boundaries trained with different feature pairs along the
-training and testing data points respectively.
-
-As these figures show, the learned decision boundaries separate the two
+As these figures demonstrate, the learned decision boundaries separate the two
 clusters of points corresponding to two classes without errors. The
 decision boundaries also work for the unseen test data. Note though,
 that for example in the two bottom left plots of Figure
@@ -161,7 +156,7 @@ learning rates.<span label="fig:lr"></span>](figures/lr.png)
 
 We can explore the effects of different learning rates <img src="./svgs/1d0496971a2775f4887d1df25cea4f7e.svg" width=8.752095pt height=14.15535pt/> by
 plotting the convergence of the model when using them. Such a plot is
-given in Figure [3](#fig:lr). It can be clearly observed, that lower
+given in the figure above. It can be clearly observed, that lower
 learning rates cause slower convergence, but for this simple problem do
 not results in better convergence at later epochs. Given the very low
 loss achieved after only few epochs when using higher learning rates
