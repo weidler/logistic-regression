@@ -1,5 +1,7 @@
 # Logistic Regression
 
+Python implementation of the Logistic Regression model (https://en.wikipedia.org/wiki/Logistic_regression), applied to and analysed on the iris dataset (https://archive.ics.uci.edu/ml/datasets/iris) and the monk dataset (https://archive.ics.uci.edu/ml/datasets/MONK%27s+Problems). Main implementation of the algorithm can be found in *src/logistic.py*. A theoretical description of the model and the implementation is given below.
+
 ### Requirements
 Required packages are listed in requirements.txt. Install them into your virtual environment with
 
@@ -100,55 +102,14 @@ dataset.<span label="fig:perfiris"></span>](figures/performance.png)
 
 ## Iris Dataset
 
-![Decision boundaries from Figure
-[\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
-test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_0_1.png)
-![Decision boundaries from Figure
-[\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
-test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_0_2.png)
-![Decision boundaries from Figure
-[\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
-test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_0_3.png)
-![Decision boundaries from Figure
-[\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
-test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_1_2.png)
-![Decision boundaries from Figure
-[\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
-test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_1_3.png)
-![Decision boundaries from Figure
-[\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
-test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_2_3.png)
-
-![Decision boundaries from Figure
-[\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
-test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_0_1_test.png)
-![Decision boundaries from Figure
-[\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
-test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_0_2_test.png)
-![Decision boundaries from Figure
-[\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
-test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_0_3_test.png)
-![Decision boundaries from Figure
-[\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
-test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_1_2_test.png)
-![Decision boundaries from Figure
-[\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
-test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_1_3_test.png)
-![Decision boundaries from Figure
-[\[fig:decision-boundaries\]](#fig:decision-boundaries) but with the
-test data
-points.<span id="fig:decision-boundaries-test" label="fig:decision-boundaries-test">\[fig:decision-boundaries-test\]</span>](figures/db_2_3_test.png)
+| Train Data | Test Data |
+| --- | --- |
+| ![](figures/db_0_1.png) | ![](figures/db_0_1_test.png) |
+| ![](figures/db_0_2.png) | ![](figures/db_0_2_test.png) |
+| ![](figures/db_0_3.png) | ![](figures/db_0_3_test.png) |
+| ![](figures/db_1_2.png) | ![](figures/db_1_2_test.png) |
+| ![](figures/db_1_3.png) | ![](figures/db_1_3_test.png) |
+| ![](figures/db_2_3.png) | ![](figures/db_2_3_test.png) |
 
 For experiments on the Iris dataset, the learning rate is set to
 0.05 and the weight decay to 0.005. Figure [2](#fig:perfiris)
