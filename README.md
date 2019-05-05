@@ -1,6 +1,6 @@
 # Logistic Regression
 
-Python implementation of the Logistic Regression model (https://en.wikipedia.org/wiki/Logistic_regression), applied to and analysed on the iris dataset (https://archive.ics.uci.edu/ml/datasets/iris) and the monk dataset (https://archive.ics.uci.edu/ml/datasets/MONK%27s+Problems). Main implementation of the algorithm can be found in *src/logistic.py*. A theoretical description of the model and the implementation is given below.
+Python implementation of the [Logistic Regression](https://en.wikipedia.org/wiki/Logistic_regression) model, applied to and analysed on the [iris dataset](https://archive.ics.uci.edu/ml/datasets/iris) and the [monk dataset](https://archive.ics.uci.edu/ml/datasets/MONK%27s+Problems). Main implementation of the algorithm can be found in *src/logistic.py*. A theoretical description of the model and the implementation is given below.
 
 ### Requirements
 Required packages are listed in requirements.txt. Install them into your virtual environment with
